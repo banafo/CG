@@ -1,10 +1,20 @@
 /**
  * @file
+ *
  * Summary.
  * <p>Hierarchical Robot object using a matrix stack.</p>
-
+ *
+ * @author Paulo Roma
+ * @since 27/09/2016
+ * @see https://orion.lcg.ufrj.br/WebGL/labs/WebGL/Assignment_3/Hierarchy.html
+ * @see <a href="/WebGL/labs/WebGL/Assignment_3/Hierarchy.js">source</a>
+ * @see <a href="/WebGL/labs/WebGL/teal_book/cuon-matrix.js">cuon-matrix</a>
+ * @see https://www.cs.ucy.ac.cy/courses/EPL426/courses/eBooks/ComputerGraphicsPrinciplesPractice.pdf#page=188
+ * @see https://www.cs.drexel.edu/~david/Classes/ICG/Lectures_new/L-14_HierchModels.pdf
+ * @see https://www.lcg.ufrj.br/WebGL/labs/WebGL/Assignment_3/5.hierarchy.pdf
+ * @see <img src="../robot.png" width="512">
+ */
 "use strict";
-
 /**
  * A very basic stack class,
  * for keeping a hierarchy of transformations.
@@ -297,13 +307,16 @@ function handleKeyPress(event) {
   var ch = getChar(event);
   let opt = document.getElementById("options");
   switch (ch) {
+    
     case "t":
       torsoAngle += 15;
       torsoMatrix.setTranslate(0, 0, 0).rotate(torsoAngle, 0, 1, 0);
+      draw();
       break;
     case "T":
       torsoAngle -= 15;
       torsoMatrix.setTranslate(0, 0, 0).rotate(torsoAngle, 0, 1, 0);
+      draw();
       break;
     case "s":
       shoulderAngle += 15;
@@ -320,6 +333,7 @@ function handleKeyPress(event) {
         .rotate(-leftShouldeAngle, 1, 0, 0)
         .translate(0, -2, 0);
       leftShoulderMatrix.setTranslate(-6.5, 2, 0).multiply(currentLeftShoulderRot);
+      draw();
       break;
     case "S":
       shoulderAngle -= 15;
@@ -335,6 +349,7 @@ function handleKeyPress(event) {
         .rotate(-leftShouldeAngle, 1, 0, 0)
         .translate(0, -2, 0);
       leftShoulderMatrix.setTranslate(-6.5, 2, 0).multiply(currentLeftShoulderRot);
+      draw();
       break;
     case "a":
       armAngle += 15;
@@ -352,7 +367,7 @@ function handleKeyPress(event) {
         .rotate(-leftArmAngle, 1, 0, 0)
         .translate(0, -2.5, -1.0);
       leftArmMatrix.setTranslate(0, -5, 0).multiply(currentArm);
-
+      draw();
       break;
     case "A":
       armAngle -= 15;
@@ -369,7 +384,7 @@ function handleKeyPress(event) {
         .rotate(-leftArmAngle, 1, 0, 0)
         .translate(0, -2.5, -1.0);
       leftArmMatrix.setTranslate(0, -5, 0).multiply(currentArm);
-
+      draw();
       break;
     case "h":
       handAngle += 15;
@@ -377,6 +392,7 @@ function handleKeyPress(event) {
       handMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
 
       leftHandMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
+      draw();
       break;
     case "H":
       handAngle -= 15;
@@ -384,14 +400,17 @@ function handleKeyPress(event) {
       handMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
 
       leftHandMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
+      draw();
       break;
     case "l":
       headAngle += 15;
       headMatrix.setTranslate(0, 7, 0).rotate(headAngle, 0, 1, 0);
+      draw();
       break;
     case "L":
       headAngle -= 15;
       headMatrix.setTranslate(0, 7, 0).rotate(headAngle, 0, 1, 0);
+      draw();
       break;
     case "p":
       legAngle += 15;
@@ -407,6 +426,7 @@ function handleKeyPress(event) {
         .rotate(-leftLegAngle, 1, 0, 0)
         .translate(0, -4, -2.5);
       leftLegMatrix.setTranslate(-2, -9, 0).multiply(currentleftLeg);
+      draw();
       break;
 
     case "P":
@@ -423,6 +443,7 @@ function handleKeyPress(event) {
       .rotate(-leftLegAngle, 1, 0, 0)
       .translate(0, -4, -2.5);
     leftLegMatrix.setTranslate(-2, -9, 0).multiply(currentleftLeg);
+    draw();
       break;
     
       case "o":
@@ -439,7 +460,8 @@ function handleKeyPress(event) {
         .rotate(-leftFootLegAngle, 1, 0, 0)
         .translate(0, -2.9, 1.6);
       leftFootLegMatrix.setTranslate(0, -6.5, 0).multiply(currentLeftFoot);
-        break
+      draw();
+        break;
 
       case "O":
         footLegAngle -= 15; 
@@ -455,7 +477,8 @@ function handleKeyPress(event) {
         .rotate(-leftFootLegAngle, 1, 0, 0)
         .translate(0, -2.9, 1.6);
       leftFootLegMatrix.setTranslate(0, -6.5, 0).multiply(currentLeftFoot);
-        break
+      draw();
+        break;
 
 
 
@@ -504,7 +527,8 @@ function renderCube(matrixStack, matrixLocal) {
   loc = gl.getUniformLocation(lightingShader, "projection");
   gl.uniformMatrix4fv(loc, false, projection.elements);
   loc = gl.getUniformLocation(lightingShader, "u_Color");
-  gl.uniform4f(loc, 0.0, 1.0, 0.0, 1.0);
+  gl.uniform4f(loc, 1.0, 0.0, 1.0, 1.0);
+
   var loc = gl.getUniformLocation(lightingShader, "lightPosition");
   gl.uniform4f(loc, 5.0, 10.0, 5.0, 1.0);
   var modelMatrixloc = gl.getUniformLocation(lightingShader, "model");
@@ -529,14 +553,10 @@ function renderCube(matrixStack, matrixLocal) {
 /** Code to actually render our geometry. */
 function draw() {
   // clear the framebuffer
-  
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BIT);
-
-  mat4.perspective(projection, Math.PI/12 , 1, 30, 33);
+  mat4.perspective(projection, Math.PI/12 , -1, 30, 33);
   let modelview = rotator.getViewMatrix();
   mat4.multiply(modelviewProjection, projection, modelview);
-  
-  
   
   // set up the matrix stack
   var s = new Stack();
@@ -658,7 +678,8 @@ window.addEventListener("load", (event) => {
     requestAnimationFrame(animate);
   };
   // start drawing!
-  rotator = new SimpleRotator(canvas, draw, 10);
-  animate();
-  
+  rotator = new SimpleRotator(canvas, draw, 12);
+  //animate();
+  draw();
+
 });

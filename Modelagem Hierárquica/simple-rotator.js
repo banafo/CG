@@ -64,7 +64,7 @@ function SimpleRotator(canvas, callback, viewDistance, rotY, rotX) {
     var xLimit = 85;
     var center;
     var degreesPerPixelX = 90/canvas.height;
-    var degreesPerPixelY = 180/canvas.width; 
+    var degreesPerPixelY = 360/canvas.width; 
     this.getXLimit = function() {
         return xLimit;
     };
