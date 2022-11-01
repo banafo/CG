@@ -311,12 +311,10 @@ function handleKeyPress(event) {
     case "t":
       torsoAngle += 15;
       torsoMatrix.setTranslate(0, 0, 0).rotate(torsoAngle, 0, 1, 0);
-      draw();
       break;
     case "T":
       torsoAngle -= 15;
       torsoMatrix.setTranslate(0, 0, 0).rotate(torsoAngle, 0, 1, 0);
-      draw();
       break;
     case "s":
       shoulderAngle += 15;
@@ -333,7 +331,6 @@ function handleKeyPress(event) {
         .rotate(-leftShouldeAngle, 1, 0, 0)
         .translate(0, -2, 0);
       leftShoulderMatrix.setTranslate(-6.5, 2, 0).multiply(currentLeftShoulderRot);
-      draw();
       break;
     case "S":
       shoulderAngle -= 15;
@@ -349,7 +346,6 @@ function handleKeyPress(event) {
         .rotate(-leftShouldeAngle, 1, 0, 0)
         .translate(0, -2, 0);
       leftShoulderMatrix.setTranslate(-6.5, 2, 0).multiply(currentLeftShoulderRot);
-      draw();
       break;
     case "a":
       armAngle += 15;
@@ -367,7 +363,6 @@ function handleKeyPress(event) {
         .rotate(-leftArmAngle, 1, 0, 0)
         .translate(0, -2.5, -1.0);
       leftArmMatrix.setTranslate(0, -5, 0).multiply(currentArm);
-      draw();
       break;
     case "A":
       armAngle -= 15;
@@ -384,7 +379,6 @@ function handleKeyPress(event) {
         .rotate(-leftArmAngle, 1, 0, 0)
         .translate(0, -2.5, -1.0);
       leftArmMatrix.setTranslate(0, -5, 0).multiply(currentArm);
-      draw();
       break;
     case "h":
       handAngle += 15;
@@ -392,7 +386,6 @@ function handleKeyPress(event) {
       handMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
 
       leftHandMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
-      draw();
       break;
     case "H":
       handAngle -= 15;
@@ -400,17 +393,13 @@ function handleKeyPress(event) {
       handMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
 
       leftHandMatrix.setTranslate(0, -4, 0).rotate(handAngle, 0, 1, 0);
-      draw();
       break;
     case "l":
       headAngle += 15;
-      headMatrix.setTranslate(0, 7, 0).rotate(headAngle, 0, 1, 0);
-      draw();
       break;
     case "L":
       headAngle -= 15;
       headMatrix.setTranslate(0, 7, 0).rotate(headAngle, 0, 1, 0);
-      draw();
       break;
     case "p":
       legAngle += 15;
@@ -426,7 +415,6 @@ function handleKeyPress(event) {
         .rotate(-leftLegAngle, 1, 0, 0)
         .translate(0, -4, -2.5);
       leftLegMatrix.setTranslate(-2, -9, 0).multiply(currentleftLeg);
-      draw();
       break;
 
     case "P":
@@ -443,7 +431,6 @@ function handleKeyPress(event) {
       .rotate(-leftLegAngle, 1, 0, 0)
       .translate(0, -4, -2.5);
     leftLegMatrix.setTranslate(-2, -9, 0).multiply(currentleftLeg);
-    draw();
       break;
     
       case "o":
@@ -460,9 +447,7 @@ function handleKeyPress(event) {
         .rotate(-leftFootLegAngle, 1, 0, 0)
         .translate(0, -2.9, 1.6);
       leftFootLegMatrix.setTranslate(0, -6.5, 0).multiply(currentLeftFoot);
-      draw();
         break;
-
       case "O":
         footLegAngle -= 15; 
         leftFootLegAngle -= 15;
@@ -477,15 +462,10 @@ function handleKeyPress(event) {
         .rotate(-leftFootLegAngle, 1, 0, 0)
         .translate(0, -2.9, 1.6);
       leftFootLegMatrix.setTranslate(0, -6.5, 0).multiply(currentLeftFoot);
-      draw();
         break;
-
-
-
-
     default:
       return;
-  }
+  }draw();
   opt.innerHTML = `<br>${gl.getParameter(
     gl.SHADING_LANGUAGE_VERSION
   )}<br>${gl.getParameter(gl.VERSION)}`;
@@ -678,7 +658,8 @@ window.addEventListener("load", (event) => {
     requestAnimationFrame(animate);
   };
   // start drawing!
-  rotator = new SimpleRotator(canvas, draw, 12);
+  rotator = new SimpleRotator(canvas, draw, 12, 150,0);
+  
   //animate();
   draw();
 
